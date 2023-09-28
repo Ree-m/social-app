@@ -1,10 +1,11 @@
 const { db } = require("../config/firebase.js");
 const twilio = require("twilio");
+require("dotenv").config();
 
-const accountSid = "ACe113790b39878094cd6b60b21566a210";
-const authToken = "0d3462758f065bbe8a7014650e250336";
-const verifySid = "VA1f36692a9ca773f7ddf8235e9357351b";
-
+const accountSid = process.env.ACCOUNTSID;
+const authToken = process.env.AUTHTOKEN
+const verifySid = process.env.VERIFYSID;
+console.log("checking env",process.env.ACCOUNTSID)
 const client = twilio(accountSid, authToken, {
   layzLoading: true,
 });

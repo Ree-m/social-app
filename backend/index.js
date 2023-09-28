@@ -2,10 +2,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+require("dotenv").config();
+// console.log(process.env)
 
 // routes
 const mainRoutes = require("./routes/main");
-app.use(cors({ credentials: true, origin:"http://127.0.0.1:5173"  }));
+console.log(process.env.ORIGIN)
+
+app.use(cors({ credentials: true, origin:process.env.ORIGIN }));
 
 app.use(express.json());
 app.use(bodyParser.json());
