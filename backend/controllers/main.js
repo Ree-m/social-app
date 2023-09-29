@@ -10,60 +10,6 @@ const client = twilio(accountSid, authToken, {
   layzLoading: true,
 });
 
-// function generateAccessCode() {
-//   const min = 100000;
-//   const max = 999999;
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-// }
-
-// exports.createNewAccessCode = async (req, res) => {
-//   try {
-//     const { phoneNumber } = await req.body;
-//     const accessCode = generateAccessCode();
-
-//     console.log("body", req.body);
-//     const usersRef = db.collection("users").doc(phoneNumber);
-//     const response = await usersRef.set(
-//       {
-//         accessCode: accessCode,
-//       },
-//       { merge: true }
-//     );
-//     res.status(200).send({ accessCode: accessCode });
-//   } catch (error) {
-//     console.error("Error creating access code:", error);
-//     return res.status(500).json({ error: "Internal server error" });
-//   }
-// };
-
-// exports.validateAccessCode = async (req, res) => {
-//   try {
-//     const { phoneNumber, accessCode } = await req.body;
-
-//     console.log("body", req.body);
-//     const usersRef = db.collection("users").doc(phoneNumber);
-//     const usersSnapShot = await usersRef.get();
-//     console.log("usersSnapShot", usersSnapShot.exists, usersSnapShot.data());
-
-//     if (
-//       usersSnapShot.exists &&
-//       usersSnapShot.data().accessCode === accessCode
-//     ) {
-//       await usersRef.update({
-//         accessCode: "",
-//       });
-//       return res.status(200).json({ success: "true" });
-//     } else {
-//       return res
-//         .status(400)
-//         .json({ success: "false", error: "Invalid access code" });
-//     }
-//   } catch (error) {
-//     console.error("Error validating access code:", error);
-//     return res.status(500).json({ error: "Internal server error" });
-//   }
-// };
-
 exports.createNewAccessCode = async (req, res) => {
   const { phoneNumber } = req.body;
   const phoneNumberString = phoneNumber.toString();
@@ -115,3 +61,39 @@ exports.validateAccessCode = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
+exports.success=(req, res) => {
+
+  const sessions = req.sessionStore.sessions;
+  const sessionKeys = Object.keys(sessions);
+  console.log("success", req.sessionStore);
+
+  if (sessionKeys.length > 0) {
+    // Get the last session ID
+    const lastSessionID = sessionKeys[sessionKeys.length - 1];
+
+    // Parse the session data for the last session
+    const lastSessionData = JSON.parse(sessions[lastSessionID]);
+
+    // Extract the access token from the last session data
+    const {
+      passport: {
+        user: { accessToken },
+      },
+    } = lastSessionData;
+
+    // accessToken from the last session
+    console.log("Access Token:", accessToken);
+    return res.json({accessToken})
+  } else {
+    console.error("No sessions found");
+    return res.status(401).json({ error: "Session data not found" });
+  }
+}
+
+exports.fail=async(req,res)=>{
+  console.log("fail");
+  return res.json("Failed attempt");
+
+
+}

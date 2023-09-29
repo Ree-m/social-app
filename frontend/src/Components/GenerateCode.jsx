@@ -21,6 +21,7 @@ const GenerateCode = () => {
     if (response.ok) {
       const data = await response.json();
       console.log("generate access code data", data);
+      alert("Access code sent. Check your messages.")
       //   setAccessCode(data.accessCode)
     }
   };
