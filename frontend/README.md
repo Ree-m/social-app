@@ -1,8 +1,52 @@
-# React + Vite
+### Setup
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Install the dependencies and devdependencies.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```sh
+  cd social-app
+
+  cd frontend
+
+  npm install
+
+  cd ..
+
+  cd backend
+
+  npm install
+
+```
+
+To start react server
+
+```sh
+cd frontend
+
+npm run dev
+```
+
+To start node server
+
+```sh
+cd backend
+
+npm run dev
+
+```
+
+Add this to your .env file in root of backend folder.
+
+```sh
+
+ACCOUNTSID=
+AUTHTOKEN=
+VERIFYSID=
+ORIGIN=
+FACEBOOK_CLIENT_ID=
+FACEBOOK_CLIENT_SECRET=
+FACEBOOK_CALLBACK_URL=
+
+
+```
+
